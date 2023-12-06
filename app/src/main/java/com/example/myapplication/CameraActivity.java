@@ -34,6 +34,7 @@ public class CameraActivity extends AppCompatActivity {
                     .setMessage("メッセージです")
                     .setPositiveButton("OK", (dialogInterface, i) -> {
 
+                        // https://qiita.com/yasumodev/items/a5cbac4278cd14c74899
                         Runnable executeRequest = () -> {
                             OkHttpClient client = new OkHttpClient();
                             System.out.println("---------- get normal ----------");
