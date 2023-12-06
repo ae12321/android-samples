@@ -23,7 +23,7 @@ public class CameraActivity extends AppCompatActivity {
         final Handler mainThread = new Handler(Looper.getMainLooper());
         // 回避: java.lang.NullPointerException: Can't toast on a thread that has not called Looper.prepare()
         mainThread.post(() -> {
-            Toast.makeText(CameraActivity.this, "OKがクリックされた", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CameraActivity.this, "通知しました", Toast.LENGTH_SHORT).show();
         });
     };
 
@@ -34,7 +34,7 @@ public class CameraActivity extends AppCompatActivity {
         final Handler mainThread = new Handler(Looper.getMainLooper());
         // 回避: java.lang.NullPointerException: Can't toast on a thread that has not called Looper.prepare()
         mainThread.post(() -> {
-            Toast.makeText(CameraActivity.this, "NOがクリックされた", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CameraActivity.this, "通知できませんでした", Toast.LENGTH_SHORT).show();
         });
     };
 
