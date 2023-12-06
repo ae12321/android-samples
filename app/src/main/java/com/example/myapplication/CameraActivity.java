@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class CameraActivity extends AppCompatActivity {
 
     Button btnModal;
@@ -20,11 +24,35 @@ public class CameraActivity extends AppCompatActivity {
      *
      */
     private Runnable positive = () -> {
-        final Handler mainThread = new Handler(Looper.getMainLooper());
-        // 回避: java.lang.NullPointerException: Can't toast on a thread that has not called Looper.prepare()
-        mainThread.post(() -> {
-            Toast.makeText(CameraActivity.this, "通知しました", Toast.LENGTH_SHORT).show();
-        });
+        OkHttpClient client = new OkHttpClient();
+
+        System.out.println("---------- get normal ----------");
+        try {
+            String url = "https://httpbin.org/get";
+            Request request = new Request.Builder().url(url).build();
+            Response response = client.newCall(request).execute();
+
+            System.out.println("---------- body ----------");
+            final String body = response.body().string();
+            System.out.println(body);
+
+            final Handler mainThread = new Handler(Looper.getMainLooper());
+            mainThread.post(() -> {
+                try {
+                    textResponse.setText(body);
+                    Toast.makeText(CameraActivity.this, "通知しました", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(CameraActivity.this, "通知できませんでした", Toast.LENGTH_SHORT).show();
+                }
+            });
+            System.out.println("---------- headers ----------");
+            System.out.println(response.headers());
+            System.out.println("---------- code ----------");
+            System.out.println(response.code());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     };
 
     /**
